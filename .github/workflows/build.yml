@@ -15,7 +15,10 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.0' # 选择你需要的 Flutter 版本
+        flutter-version: '3.27.1' # 选择你需要的 Flutter 版本
+
+    - name: Upgrade Flutter
+      run: flutter upgrade
 
     - name: Install CocoaPods
       run: |
