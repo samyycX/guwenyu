@@ -1,0 +1,46 @@
+name: Build iOS Flutter App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.0.0' # 选择你需要的 Flutter 版本
+
+    - name: Install CocoaPods
+      run: |
+        brew install cocoapods
+        pod setup
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build iOS
+      run: flutter build ios --release --no-codesign
+
+    - name: Create IPA
+      run: |
+        xcodebuild -exportArchive \
+          -archivePath build/ios/archive/MyApp.xcarchive \
+          -exportPath build/ios/ipa \
+          -exportOptionsPlist ios/ExportOptions.plist
+
+    - name: Upload IPA
+      uses: actions/upload-artifact@v2
+      with:
+        name: GuWenYu.ipa
+        path: build/ios/ipa/GuWenYu.ipa
