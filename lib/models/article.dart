@@ -32,7 +32,7 @@ class Article {
         references: List<Reference>.from(
             json["references"].map((x) => Reference.fromJson(x))),
         translation: json["translation"],
-        purport: json["purport"]
+        purport: json["purport"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,7 +43,7 @@ class Article {
         "translation": translation,
         "purport": purport,
       };
-},
+}
 
 class Reference {
   String allusion;
